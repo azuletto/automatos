@@ -6,6 +6,7 @@ public class MT {
     Integer estadosFinais[], estadoInicial, estadoAtual, node = 0;
     String sentido, dados[],fita[], type = "M";
     public Patterns[] patterns;
+    public Boolean aceita;
 
 
     public MT(String[] specs, String[] input) {
@@ -26,7 +27,7 @@ public class MT {
             this.patterns[i] = new Patterns(patterns[i], type);
         }
     }
-    public Boolean run() {
+    public void run() {
         //metodo que executa a maquina
         System.out.println("Estado Inicial em -> "+estadoInicial);
         for (int i = 0; i < dados.length; i++) {
@@ -34,36 +35,38 @@ public class MT {
             estadoAtual = estadoInicial;
             for (int j = 0; j < input.length(); j++) {
                 estadoAtual = proximoEstado(estadoAtual, input.charAt(j));
-                System.out.println("sentido"+this.patterns[i].sentido);
-                if(this.patterns[i].sentido == "d") {
-                    System.out.println("Foi para a direita");
+                System.out.println("sentido - "+this.patterns[i].sentido);
+
+                if(this.patterns[i].sentido.equals("d")) {
+                    System.out.println("-->");
                     node++;
-                }
-                if(this.patterns[i].sentido == "e") {
-                    System.out.println("Foi para a esquerda");
+                } else if(this.patterns[i].sentido.equals("e")) {
+                    System.out.println("<--");
                     node--;
                 }
+                
+
                 //verifica se o estado atual eh nulo ou seja se há transição
                 System.out.println("O Estado eh -> "+estadoAtual+" ---- Simbolo: "+input.charAt(j));
                 if(estadoAtual == null) {
                     System.out.println("REJEITADO POR NAO TER TRANSICAO");
-                    return false;
+                    aceita = false;
                 }
             }
         }
         System.out.println("ESTADO FINAL DA FITA :");
         for (int i = 0; i < fita.length; i++) {
-            if(fita[i]!=null){
+            if(fita[i]!=null) {
                 System.out.println(fita[i]);
                 }
             }
         //verifica se o estado atual eh final        
-        if (isFinal(estadoAtual)) {
+        if (aceita = true) {
             System.out.println("\nACEITA");
-            return true;
+            
         } else {
             System.out.println("\nREJEITA");
-            return false;
+            aceita = false;
         }
     }
     public Integer proximoEstado(Integer estadoAtual, Character simbolo) {
@@ -75,13 +78,13 @@ public class MT {
         }
         return null;
     }
-    public Boolean isFinal(Integer estadoAtual) {
+    public void isFinal(Integer estadoAtual) {
         for (int i = 0; i < estadosFinais.length; i++) {
             if (estadosFinais[i] == estadoAtual) {
-                return true;
+                aceita = true;
             }
         }
-        return false;
+        aceita = false;
     }
     public void escrever(String escreve) {
         fita[node] = escreve;
