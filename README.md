@@ -1,4 +1,9 @@
 # MÁQUINAS DE ESTADO
+Alunos:
+André Malsemiro da Silva de Oliveira
+Gabriel Augusto Lamarca Nunes
+Luís Fernando da Costa de Lima
+
  trabalho de teoria da computação, criar um emulador para Autômados finitos, Autômatos de pilha e Máquina de Turing.
  
  Kanban do trabalho -
